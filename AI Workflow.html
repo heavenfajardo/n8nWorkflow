@@ -265,14 +265,32 @@ function submitQuiz() {
         return
     }
 
-    // Display answers in console (for testing)
     console.log({email, answers})
 
-    // Show result placeholder
     document.getElementById("result").style.display = "block"
     document.getElementById("resultText").innerText = "Analyzing your personality..."
-    
-    // TODO: Connect to n8n webhook here
+
+    const webhookURL = "https://azazii.app.n8n.cloud/webhook/ae9b376e-26f1-4397-95f7-a664c143af08";
+
+    fetch(webhookURL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            email: email,
+            answers: answers
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        document.getElementById("resultText").innerText = "Your MBTI: " + data.mbti_result;
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        document.getElementById("resultText").innerText = "There was an error analyzing your personality. Please try again later.";
+    });
 }
 </script>
 
