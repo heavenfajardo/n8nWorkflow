@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MBTI Personality Test</title>
+<style>
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.description {
+    text-align: center;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.question {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.question h3 {
+    margin-bottom: 15px;
+}
+
+.options {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between; 
+    flex-wrap: wrap; 
+}
+
+.option {
+    flex: 1 1 48%; 
+    cursor: pointer;
+    border: 3px solid transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    min-width: 120px;
+    max-width: 100%;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    height: 150px; 
+}
+
+.option img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover; 
+    display: block;
+    border-radius: 6px;
+}
+
+.option.selected {
+    border-color: #4CAF50;
+}
+
+.email-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.email-section input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.email-section button {
+    margin-top: 15px;
+    padding: 12px 20px;
+    background: #4CAF50;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.email-section button:hover {
+    background: #45a049;
+}
+
+.result {
+    display: none;
+    margin-top: 30px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+
+@media (max-width: 600px) {
+    .option img {
+        height: 120px;  
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>Discover Your MBTI Personality</h1>
+<p class="description">Answer the questions below and find out your personality type.</p>
+
+<div class="question">
+<h3>1. How do you usually spend your free time?</h3>
+<div class="options">
+    <div class="option" data-question="q1" data-answer="A">
+        <img src="images/exercising_jogging.png" alt="Exercising or jogging">
+    </div>
+    <div class="option" data-question="q1" data-answer="B">
+        <img src="images/relaxing_couch.png" alt="Relaxing on the couch">
+    </div>
+</div>
+</div>
+
+<div class="question">
+<h3>2. What environment do you enjoy more?</h3>
+<div class="options">
+    <div class="option" data-question="q2" data-answer="A">
+        <img src="images/peaceful_park_bench.png" alt="Peaceful environment">
+    </div>
+    <div class="option" data-question="q2" data-answer="B">
+        <img src="images/lively_social_gathering.png" alt="Lively environment">
+    </div>
+</div>
+</div>
+
+<div class="question">
+<h3>3. How do you make decisions?</h3>
+<div class="options">
+    <div class="option" data-question="q3" data-answer="A">
+        <img src="images/solitary_planner_decision_making.png" alt="Logical decision-making">
+    </div>
+    <div class="option" data-question="q3" data-answer="B">
+        <img src="images/group_collaboration_decision_making.png" alt="Group decision-making">
+    </div>
+</div>
+</div>
+
+<div class="question">
+<h3>4. How do you prefer to plan activities?</h3>
+<div class="options">
+    <div class="option" data-question="q4" data-answer="A">
+        <img src="images/organized_planner_activity.png" alt="Organized planning">
+    </div>
+    <div class="option" data-question="q4" data-answer="B">
+        <img src="images/spontaneous_social_planning.png" alt="Spontaneous planning">
+    </div>
+</div>
+</div>
+
+<div class="question">
+<h3>5. Which describes you better?</h3>
+<div class="options">
+    <div class="option" data-question="q5" data-answer="A">
+        <img src="images/dynamic_interaction_in_group.png" alt="Outgoing and dynamic">
+    </div>
+    <div class="option" data-question="q5" data-answer="B">
+        <img src="images/quiet_contemplation_in_park.png" alt="Thoughtful and reserved">
+    </div>
+</div>
+</div>
+
+<div class="question">
+<h3>6. How do you usually solve problems?</h3>
+<div class="options">
+    <div class="option" data-question="q6" data-answer="A">
+        <img src="images/solo_problem_solving.png" alt="Logical problem-solving">
+    </div>
+    <div class="option" data-question="q6" data-answer="B">
+        <img src="images/group_problem_solving.png" alt="Creative problem-solving">
+    </div>
+</div>
+</div>
+
+<div class="question">
+<h3>7. When working with others you prefer?</h3>
+<div class="options">
+    <div class="option" data-question="q7" data-answer="A">
+        <img src="images/working_alone_in_home_office.png" alt="Independent work">
+    </div>
+    <div class="option" data-question="q7" data-answer="B">
+        <img src="images/working_in_group_collaboration.png" alt="Team collaboration">
+    </div>
+</div>
+</div>
+
+<div class="question">
+<h3>8. Which situation feels more natural to you?</h3>
+<div class="options">
+    <div class="option" data-question="q8" data-answer="A">
+        <img src="images/quiet_time_alone_separate.png" alt="Quiet and alone">
+    </div>
+    <div class="option" data-question="q8" data-answer="B">
+        <img src="images/lively_group_gathering_separate.png" alt="Lively group">
+    </div>
+</div>
+</div>
+
+<div class="email-section">
+<label>Enter your email to receive the result:</label>
+<input type="email" id="email" placeholder="your@email.com">
+<button onclick="submitQuiz()">Submit</button>
+</div>
+
+<div class="result" id="result">
+<h2>Your MBTI Result</h2>
+<p id="resultText">Waiting for analysis...</p>
+</div>
+
+<script>
+let answers = {}
+
+document.querySelectorAll(".option").forEach(option => {
+    option.addEventListener("click", function() {
+        const question = this.dataset.question
+        const answer = this.dataset.answer
+        answers[question] = answer
+
+        document.querySelectorAll(`[data-question="${question}"]`).forEach(el => {
+            el.classList.remove("selected")
+        })
+        this.classList.add("selected")
+    })
+})
+
+function submitQuiz() {
+    const email = document.getElementById("email").value
+    if(!email) {
+        alert("Please enter your email.")
+        return
+    }
+    if(Object.keys(answers).length < 8) {
+        alert("Please answer all questions.")
+        return
+    }
+
+    // Display answers in console (for testing)
+    console.log({email, answers})
+
+    // Show result placeholder
+    document.getElementById("result").style.display = "block"
+    document.getElementById("resultText").innerText = "Analyzing your personality..."
+    
+    // TODO: Connect to n8n webhook here
+}
+</script>
+
+</body>
+</html>
