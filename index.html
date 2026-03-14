@@ -255,20 +255,20 @@ document.querySelectorAll(".option").forEach(option => {
 })
 
 function submitQuiz() {
-    const email = document.getElementById("email").value
+    const email = document.getElementById("email").value;
     if(!email) {
-        alert("Please enter your email.")
-        return
+        alert("Please enter your email.");
+        return;
     }
     if(Object.keys(answers).length < 8) {
-        alert("Please answer all questions.")
-        return
+        alert("Please answer all questions.");
+        return;
     }
 
-    console.log({email, answers})
+    console.log({email, answers});
 
-    document.getElementById("result").style.display = "block"
-    document.getElementById("resultText").innerText = "Analyzing your personality..."
+    document.getElementById("result").style.display = "block";
+    document.getElementById("resultText").innerText = "Analyzing your personality...";
 
     const webhookURL = "https://azazii.app.n8n.cloud/webhook/ae9b376e-26f1-4397-95f7-a664c143af08";
 
@@ -282,16 +282,35 @@ function submitQuiz() {
             answers: answers
         })
     })
-    .then(response => response.json())
-    .then(data => {
-
-        document.getElementById("resultText").innerText = "Your MBTI: " + data.mbti_result;
+    .then(response => {
+        // Check if the response is OK (status 200-299)
+        if (!response.ok) {
+            throw new Error('Failed to fetch MBTI result from n8n');
+        }
+        return response.json(); // Parse the JSON data
     })
-    .catch(error => {
+    .then(data => {
+        console.log("Response data:", data); // Debugging: Log the response data
+        if (data && data.mbti_result) {
+            document.getElementById("resultText").innerText = "Your MBTI: " + data.mbti_result;
+        } else {
+            document.getElementById("resultText").innerText = "There was an error analyzing your personality.";
+        }
+    })
+    .catch(async error => {
         console.error("Error:", error);
+        try {
+            const text = await error.text();
+            console.log("Server response text:", text); // Log the error response text
+        } catch (e) {
+            console.error("Error text:", e);
+        }
         document.getElementById("resultText").innerText = "There was an error analyzing your personality. Please try again later.";
     });
 }
+
+
+
 </script>
 
 </body>
