@@ -116,7 +116,6 @@ h1 {
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-
 @media (max-width: 600px) {
     .option img {
         height: 120px;  
@@ -283,7 +282,6 @@ function submitQuiz() {
         })
     })
     .then(response => {
-        // Check if the response is OK (status 200-299)
         if (!response.ok) {
             throw new Error('Failed to fetch MBTI result from n8n');
         }
@@ -308,9 +306,6 @@ function submitQuiz() {
         document.getElementById("resultText").innerText = "There was an error analyzing your personality. Please try again later.";
     });
 }
-
-
-
 </script>
 
 </body>
