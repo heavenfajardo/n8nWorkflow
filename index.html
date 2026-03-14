@@ -236,7 +236,6 @@ h1 {
 <h2>Your MBTI Result</h2>
 <p id="resultText">Waiting for analysis...</p>
 </div>
-
 <script>
 let answers = {}
 
@@ -269,7 +268,7 @@ function submitQuiz() {
     document.getElementById("result").style.display = "block";
     document.getElementById("resultText").innerText = "Analyzing your personality...";
 
-    const webhookURL = "https://azazii.app.n8n.cloud/webhook/6772f24f-b458-4b0c-bce5-ed319faa72cd";
+    const webhookURL = "https://azazii.app.n8n.cloud/webhook/6772f24f-b458-4b0c-bce5-ed319faa72cd";  // Make sure to update this URL with your production one
 
     fetch(webhookURL, {
         method: "POST",
