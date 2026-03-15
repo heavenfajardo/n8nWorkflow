@@ -154,7 +154,77 @@ h1 {
 </div>
 </div>
 
-<!-- Additional questions here... -->
+<div class="question">
+<h3>3. How do you make decisions?</h3>
+<div class="options">
+    <div class="option" data-question="q3" data-answer="A">
+        <img src="images/solitary_planner_decision_making.png" alt="Logical decision-making">
+    </div>
+    <div class="option" data-question="q3" data-answer="B">
+        <img src="images/group_collaboration_decision_making.png" alt="Group decision-making">
+    </div>
+</div>
+</div>
+
+<div class="question">
+<h3>4. How do you prefer to plan activities?</h3>
+<div class="options">
+    <div class="option" data-question="q4" data-answer="A">
+        <img src="images/organized_planner_activity.png" alt="Organized planning">
+    </div>
+    <div class="option" data-question="q4" data-answer="B">
+        <img src="images/spontaneous_social_planning.png" alt="Spontaneous planning">
+    </div>
+</div>
+</div>
+
+<div class="question">
+<h3>5. Which describes you better?</h3>
+<div class="options">
+    <div class="option" data-question="q5" data-answer="A">
+        <img src="images/dynamic_interaction_in_group.png" alt="Outgoing and dynamic">
+    </div>
+    <div class="option" data-question="q5" data-answer="B">
+        <img src="images/quiet_contemplation_in_park.png" alt="Thoughtful and reserved">
+    </div>
+</div>
+</div>
+
+<div class="question">
+<h3>6. How do you usually solve problems?</h3>
+<div class="options">
+    <div class="option" data-question="q6" data-answer="A">
+        <img src="images/solo_problem_solving.png" alt="Logical problem-solving">
+    </div>
+    <div class="option" data-question="q6" data-answer="B">
+        <img src="images/group_problem_solving.png" alt="Creative problem-solving">
+    </div>
+</div>
+</div>
+
+<div class="question">
+<h3>7. When working with others you prefer?</h3>
+<div class="options">
+    <div class="option" data-question="q7" data-answer="A">
+        <img src="images/working_alone_in_home_office.png" alt="Independent work">
+    </div>
+    <div class="option" data-question="q7" data-answer="B">
+        <img src="images/working_in_group_collaboration.png" alt="Team collaboration">
+    </div>
+</div>
+</div>
+
+<div class="question">
+<h3>8. Which situation feels more natural to you?</h3>
+<div class="options">
+    <div class="option" data-question="q8" data-answer="A">
+        <img src="images/quiet_time_alone_separate.png" alt="Quiet and alone">
+    </div>
+    <div class="option" data-question="q8" data-answer="B">
+        <img src="images/lively_group_gathering_separate.png" alt="Lively group">
+    </div>
+</div>
+</div>
 
 <div class="email-section">
 <label>Enter your email to receive the result:</label>
@@ -163,26 +233,20 @@ h1 {
 </div>
 
 <div class="result" id="result">
-<h2>Your MBTI Personality Result</h2>
-<p>Thank you for completing the personality test!</p>
-<p><strong>Your MBTI Type:</strong> <span id="mbtiResult"></span></p>
-<h3>Your Answers</h3>
-<ul>
-    <li>Q1: <span id="answerQ1"></span></li>
-    <li>Q2: <span id="answerQ2"></span></li>
-    <!-- More answers here -->
-</ul>
-<p>Have a great day!</p>
+<h2>Your MBTI Result</h2>
+<p id="resultText">Waiting for analysis...</p>
 </div>
 <script>
 let answers = {}
 
+// Handle click on answer options
 document.querySelectorAll(".option").forEach(option => {
     option.addEventListener("click", function() {
         const question = this.dataset.question
         const answer = this.dataset.answer
         answers[question] = answer
 
+        // Update selected option styles
         document.querySelectorAll(`[data-question="${question}"]`).forEach(el => {
             el.classList.remove("selected")
         })
@@ -191,22 +255,29 @@ document.querySelectorAll(".option").forEach(option => {
 })
 
 function submitQuiz() {
-    const email = document.getElementById("email").value;
+    const email = document.getElementById("email").value
+
+    // Check if email is entered
     if (!email) {
-        alert("Please enter your email.");
-        return;
+        alert("Please enter your email.")
+        return
     }
+
+    // Check if all questions are answered
     if (Object.keys(answers).length < 8) {
-        alert("Please answer all questions.");
-        return;
+        alert("Please answer all questions.")
+        return
     }
 
-    console.log({ email, answers });
+    // Log the answers and email for debugging
+    console.log({ email, answers })
 
-    document.getElementById("result").style.display = "block";
-    document.getElementById("resultText").innerText = "Analyzing your personality...";
+    // Show result loading message
+    document.getElementById("result").style.display = "block"
+    document.getElementById("resultText").innerText = "Analyzing your personality..."
 
-    const webhookURL = "https://azazii.app.n8n.cloud/webhook/6772f24f-b458-4b0c-bce5-ed319faa72cd";  // Make sure this URL is correct
+    // Send answers and email to n8n webhook
+    const webhookURL = "https://azazii.app.n8n.cloud/webhook/6772f24f-b458-4b0c-bce5-ed319faa72cd"  // Replace with your production URL
 
     fetch(webhookURL, {
         method: "POST",
@@ -220,31 +291,30 @@ function submitQuiz() {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Failed to fetch MBTI result from n8n');
+            throw new Error('Failed to fetch MBTI result from n8n')
         }
-        return response.json(); // Parse the JSON data
+        return response.json()  // Parse the JSON response
     })
     .then(data => {
-        console.log("Response data:", data); // Debugging: Log the response data
+        console.log("Response data:", data) // Log the response data for debugging
+
         if (data && data.mbti_result) {
-            document.getElementById("mbtiResult").innerText = data.mbti_result;
-            document.getElementById("answerQ1").innerText = data.answers.q1;
-            document.getElementById("answerQ2").innerText = data.answers.q2;
-            // Map other answers here
+            // Update result text with MBTI result
+            document.getElementById("resultText").innerText = "Your MBTI: " + data.mbti_result
         } else {
-            document.getElementById("resultText").innerText = "There was an error analyzing your personality.";
+            document.getElementById("resultText").innerText = "There was an error analyzing your personality."
         }
     })
     .catch(async error => {
-        console.error("Error:", error);
+        console.error("Error:", error)
         try {
-            const text = await error.text();
-            console.log("Server response text:", text); // Log the error response text
+            const text = await error.text()
+            console.log("Server response text:", text)  // Log the error response text
         } catch (e) {
-            console.error("Error text:", e);
+            console.error("Error text:", e)
         }
-        document.getElementById("resultText").innerText = "There was an error analyzing your personality. Please try again later.";
-    });
+        document.getElementById("resultText").innerText = "There was an error analyzing your personality. Please try again later."
+    })
 }
 </script>
 
