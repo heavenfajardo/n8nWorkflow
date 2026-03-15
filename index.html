@@ -270,7 +270,7 @@ function submitQuiz() {
     }
 
     // Log the answers and email for debugging
-    console.log({ email, answers })
+    console.log("Sending data to webhook:", { email, answers })
 
     // Show result loading message
     document.getElementById("result").style.display = "block"
